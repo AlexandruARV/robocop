@@ -75,7 +75,7 @@ while True:
             ymax = int(max_bottle['ymax'])
             confidence = max_bottle['confidence']
             label = max_bottle['name']
-
+            #1
           
             center_x_bottle = (xmin + xmax) / 2
             if center_x_bottle < center_x_screen - 40:
