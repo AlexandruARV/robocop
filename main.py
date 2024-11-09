@@ -30,7 +30,6 @@ if not cap.isOpened():
 
 while True:
 
-    
 
     frame_count += 1
 
@@ -43,7 +42,7 @@ while True:
         print("Nu s-a mai putut citi frame-ul.")
         break
 
-  
+
     height, width, _ = frame.shape
     center_x_screen = width / 2  
 
@@ -75,12 +74,13 @@ while True:
             ymax = int(max_bottle['ymax'])
             confidence = max_bottle['confidence']
             label = max_bottle['name']
-            #1
-          
+            
+            rectangleBottleLength = xmax - xmin
+
             center_x_bottle = (xmin + xmax) / 2
-            if center_x_bottle < center_x_screen - 40:
+            if center_x_bottle < center_x_screen - rectangleBottleLength / 2:
                 position = "Left"
-            elif center_x_bottle > center_x_screen + 40:
+            elif center_x_bottle > center_x_screen + rectangleBottleLength / 2:
                 position = "Right"
             else:
                 position = "Center"
@@ -94,7 +94,8 @@ while True:
             print(f"Suprafață chenar: {max_area} pixeli pătrați")
             print(f"Coordonate cutie delimitare: (xmin: {xmin}, ymin: {ymin}), (xmax: {xmax}, ymax: {ymax})")
 
-            message = position
+            
+            message = f"{position}, xmin: {xmin},xmax: {xmax}, rectangleBottleLength : {rectangleBottleLength}"
             server_socket.sendto(message.encode('utf-8'), client_address)
             print(f"Message sent to client {client_address}: {message}")
 
